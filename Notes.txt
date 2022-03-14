@@ -1,0 +1,18 @@
+Objectives: 
+-Create Inverted Index (Dictionary + Posting List)
+-Create Positional Index 
+-Stemming
+-
+
+Query:
+-Max 3 words e.g. t1 AND t2 AND t3
+-
+-
+
+Datasets: 
+-Collection of 448 Abstracts (for inverted and positional index)
+-Stopwords list
+-Query Result-set
+-Each document(abstract) is unique 
+-note: Review documents first
+-
