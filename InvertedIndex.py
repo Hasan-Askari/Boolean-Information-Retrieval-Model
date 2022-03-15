@@ -1,7 +1,4 @@
-from lib2to3.pgen2 import token
-from string import punctuation
 from typing import OrderedDict
-from matplotlib import collections
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -35,15 +32,18 @@ for doc in range(0, 448):
                                                             #
     tokens = word_tokenize(tokens)                          #
     # print(tokens)
+    tokens = list(tokens)
+    stopwords = list(stopwords)
 
-    for i in tokens:                                        #
+    for i in stopwords:                                        #
         i = i.lower()                                       # filtering stopwords
-        if i not in stopwords:                              # 
-            filteredList.append(i)                          # 
+        if i in tokens:                                  # 
+            tokens.remove(i)
+    # filteredList.append(i)
 
     stemmer = PorterStemmer()                               # stemming tokens using PorterStemmer from nltk
 
-    stemmedwords = [stemmer.stem(i) for i in filteredList]  
+    stemmedwords = [stemmer.stem(i) for i in tokens]  
 
     for i in stemmedwords:                                  # 
         if i in string.punctuation:                         #
@@ -61,9 +61,11 @@ for doc in range(0, 448):
     for i in stemmedwords:                                  # creating posting list 
         if i not in dictionary:
             dictionary[i] = []
-        dictionary[i].append(txtFileNum[doc])
+        dictionary[i].append(doc + 1)
 
 OrderedDictionary = OrderedDict(sorted(dictionary.items()))     # sorting dictionary using Python's OrderedDictionary
 
-for i in OrderedDictionary.items():
-    print(i)
+# for i in OrderedDictionary.items():
+#     print(i)
+
+print(OrderedDictionary.get("abduct"))

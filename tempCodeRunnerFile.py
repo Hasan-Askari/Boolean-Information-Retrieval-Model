@@ -1,1 +1,1 @@
-nltk.download("stopwords")
+
