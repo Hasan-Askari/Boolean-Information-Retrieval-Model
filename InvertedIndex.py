@@ -4,46 +4,37 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import string
 
-txtFileNum = []
+txtFiles = []
 stopwords = ""
-filteredList = []
 stemmedwords = []
 dictionary = {}
 OrderedDictionary = {}
 ext = ".txt"
 
 for i in range(1, 449):                                 # created a list for document filenames
-    txtFileNum.append(str(i) + ext)
+    txtFiles.append(str(i) + ext)
 
 StopwordList = open('./Boolean Information Retrieval Model/Stopword-List.txt', 'r')     # open Stopwords-List.txt
 
 for each in StopwordList:                               #
     stopwords = stopwords + each                        # creating tokens of Stopwords
-                                                        #
 stopwords = word_tokenize(stopwords)                    #
-    # print(stopwords)
 
 for doc in range(0, 448):
     tokens = ""
-    document = open('./Boolean Information Retrieval Model/Abstracts/' + txtFileNum[doc], 'r')     #open documents
+    document = open('./Boolean Information Retrieval Model/Abstracts/' + txtFiles[doc], 'r')     #open documents
 
-    for each in document:                                        #
+    for each in document:                                   #
         tokens = tokens + each                              # creating tokens of the documents
-                                                            #
     tokens = word_tokenize(tokens)                          #
-    # print(tokens)
-    tokens = list(tokens)
-    stopwords = list(stopwords)
-
-    for i in stopwords:                                        #
+    
+    for i in stopwords:                                     #
         i = i.lower()                                       # filtering stopwords
-        if i in tokens:                                  # 
+        if i in tokens:                                     # 
             tokens.remove(i)
-    # filteredList.append(i)
 
     stemmer = PorterStemmer()                               # stemming tokens using PorterStemmer from nltk
-
-    stemmedwords = [stemmer.stem(i) for i in tokens]  
+    stemmedwords = [stemmer.stem(i) for i in tokens]        #
 
     for i in stemmedwords:                                  # 
         if i in string.punctuation:                         #
@@ -52,11 +43,8 @@ for doc in range(0, 448):
             if j in string.punctuation:                     #
                 i = i.replace(j, "")                        #
 
-    # print("Stemmed Words = ", stemmedwords)
-
     stemmedwords = list(dict.fromkeys(stemmedwords))        # removing duplicates by converting list into dictionary (data structures)
-    #                                                         # and then back to list
-    # # print("FilteredList = ", filteredList)
+                                                            # and then back to list
 
     for i in stemmedwords:                                  # creating posting list 
         if i not in dictionary:
@@ -65,7 +53,5 @@ for doc in range(0, 448):
 
 OrderedDictionary = OrderedDict(sorted(dictionary.items()))     # sorting dictionary using Python's OrderedDictionary
 
-# for i in OrderedDictionary.items():
-#     print(i)
-
-print(OrderedDictionary.get("abduct"))
+for i in OrderedDictionary.items():
+    print(i)
