@@ -1,3 +1,4 @@
+from itertools import count
 from typing import OrderedDict
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -55,3 +56,58 @@ OrderedDictionary = OrderedDict(sorted(dictionary.items()))     # sorting dictio
 
 for i in OrderedDictionary.items():
     print(i)
+
+i = 0
+
+query = input("Enter query: ")                          # get query
+query = word_tokenize(query)                            #
+
+query = [stemmer.stem(word) for word in query]         #
+
+print(query)
+l3 = []
+
+for word in query:
+    if word == 'and':
+        if type(query[i - 1]) != list:
+            print(OrderedDictionary[query[i - 1]])
+            query[i - 1] = list(query[i - 1])
+            query[i - 1] = OrderedDictionary[query[i - 1]]
+        if query[i + 1] == 'not':
+            query[i + 2] = list()
+            query[i + 2] = OrderedDictionary[query[i + 2]]
+            # Perform ops
+            l3.extend(query[i - 1])
+            for ele in query[i + 2]:
+                if ele in l3:
+                    l3.remove(ele)
+                l3.append(ele)
+            query[i + 2] = l3
+        elif query[i + 1] != 'not':
+            query[i + 1] = list()
+            query[i + 1] = OrderedDictionary[query[i + 1]]
+            # perform ops
+            for ele in query[i - 1]:
+                if ele in query[i + 1]:
+                    l3.append(ele)
+            query[i + 1] = l3
+    
+    elif word == 'or':
+        if type(query[i - 1]) != list:
+            query[i - 1] = list()
+            query[i - 1] = OrderedDictionary[query[i - 1]]
+        query[i + 1] = OrderedDictionary[query[i + 1]]
+        # perform ops
+        l3.extend(query[i - 1])
+        for ele in query[i + 2]:
+            if ele in l3:
+                continue
+            l3.append(ele)
+        query[i + 1]
+    i += 1
+
+print(query)
+print(query[i - 1])
+
+    # foo AND NOT bar AND/OR gazonk
+    # foo AND bar AND/OR gazonk
