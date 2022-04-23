@@ -1,4 +1,3 @@
-from itertools import count
 from typing import OrderedDict
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -15,7 +14,7 @@ ext = ".txt"
 for i in range(1, 449):                                 # created a list for document filenames
     txtFiles.append(str(i) + ext)
 
-StopwordList = open('./Boolean Information Retrieval Model/Stopword-List.txt', 'r')     # open Stopwords-List.txt
+StopwordList = open('./Stopword-List.txt', 'r')     # open Stopwords-List.txt
 
 for each in StopwordList:                               #
     stopwords = stopwords + each                        # creating tokens of Stopwords
@@ -23,7 +22,7 @@ stopwords = word_tokenize(stopwords)                    #
 
 for doc in range(0, 448):
     tokens = ""
-    document = open('./Boolean Information Retrieval Model/Abstracts/' + txtFiles[doc], 'r')     #open documents
+    document = open('./Abstracts/' + txtFiles[doc], 'r')     #open documents
 
     for each in document:                                   #
         tokens = tokens + each                              # creating tokens of the documents
